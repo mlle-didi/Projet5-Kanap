@@ -108,5 +108,10 @@ cartButton.addEventListener('click', function(event){
     alert("Veuillez entrer une quantité valide s'il vous plaît");
     event.preventDefault();
   }
+<<<<<<< HEAD
   addToCart(productID, color, quantity);
 });
+=======
+  addToCart(id, color, quantity);
+}); 
+>>>>>>> ae588d5 (mise à jour)
