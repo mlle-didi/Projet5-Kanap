@@ -34,7 +34,7 @@ let fetchProduct = function() { //requete API
 
 fetchProduct();
 
-//Obtenir la valeur de quantité du formulaire et la couleur du canApé dans le balisage
+//Obtenir la valeur de quantité et la couleur du canapé dans le balisage
 function quantityValue() {
   let quantity = document.getElementById('quantity');
   return quantity.value;
@@ -54,36 +54,40 @@ function getCart() {
 }
 
 //La fonction addTocart ajoute le canapé sélectionné au localStorage, selon qu'il y est ou non
-function addToCart(productId, color, quantity) {
-  let addConfirm = () => {
-    alert('Le produit a bien été ajouté au panier');
-  }
+function addToCart(id, color, quantity) {
+  let addConfirm = () => {alert('Le produit a bien été ajouté au panier');}
+  //Si la quantité est inférieur ou égale à 0 ou qu'une couleur n'est pas sélectionné alors il n'y a aucun ajout 
   if (quantity <= 0 || color == '') {
     return;
   }
   let items = getCart();
+  //Si il n'y a aucun article dans le localStorage, on l'ajoute et on confirme son ajout
   if (items.length == 0) {
-    items = [[productId, color, quantity]];
+    items = [[id, color, quantity]];
     addConfirm();
+    //Sinon on vérifie si il est déja présent dans le localStorage
   } else {
     let found = false;
     for (let i = 0; i < items.length; i++) {
       let idArray = items[i][0];
       let colorArray = items[i][1];
       let quantityArray = items[i][2];
-      if (productId == idArray && color == colorArray) {
+      //Si il est déja présent, on l'ajoute en incrémentant sa quantité et on confirme son ajout 
+      if (id == idArray && color == colorArray) {
         found = true;
         quantityArray += quantity;
         items[i][2] = quantityArray;
         addConfirm();
       }
     }
+    //Si il n'existe pas, on l'ajoute et on confirme son ajout
     if (found == false) {
-      let item = [productId, color, quantity];
+      let item = [id, color, quantity];
       items.push(item);
       addConfirm();
     }
   }
+  //Mise à jour du localStorage
   localStorage.setItem('cart', JSON.stringify(items));
 }
 
@@ -94,11 +98,13 @@ const cartButton = document.getElementById('addToCart');
 cartButton.addEventListener('click', function(event){
   let quantity = parseInt(quantityValue());
   let color = colorValue();
+  //Si la couleur n'est pas sélectionné, un message d'erreur apparaît
   if(color == '') {
     alert("Veuillez sélectionner une couleur s'il vous plaît");
     event.preventDefault();
   }
-  if(quantity == 0) {
+  //Si la quantité est inférieur ou égale à 0, un message d'erreur apparaît
+  if(quantity <= 0) {
     alert("Veuillez entrer une quantité valide s'il vous plaît");
     event.preventDefault();
   }
