@@ -2,11 +2,11 @@
 
 //Récupération de l'id dans l'URL
 const urlProduct = new URLSearchParams (window.location.search);
-const productID = urlProduct.get('id');
+const id = urlProduct.get('id');
 
 //Récupération des données du backend et construction du DOM
 let fetchProduct = function() { //requete API
-    fetch(`http://localhost:3000/api/products/${productID}`)
+    fetch(`http://localhost:3000/api/products/${id}`)
     .then((res) => res.json())
     .then((data) => {
         //Insertion de l'image
@@ -55,7 +55,8 @@ function getCart() {
 
 //La fonction addTocart ajoute le canapé sélectionné au localStorage, selon qu'il y est ou non
 function addToCart(id, color, quantity) {
-  let addConfirm = () => {alert('Le produit a bien été ajouté au panier');}
+  let addConfirm = () => {window.confirm("Votre produit a été ajouté au panier. Pour le consulter, cliquez sur OK.");
+  window.location.href = "cart.html";}
   //Si la quantité est inférieur ou égale à 0 ou qu'une couleur n'est pas sélectionné alors il n'y a aucun ajout 
   if (quantity <= 0 || color == '') {
     return;
@@ -108,5 +109,5 @@ cartButton.addEventListener('click', function(event){
     alert("Veuillez entrer une quantité valide s'il vous plaît");
     event.preventDefault();
   }
-  addToCart(productID, color, quantity);
+  addToCart(id, color, quantity);
 });
