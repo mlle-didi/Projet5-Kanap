@@ -128,7 +128,7 @@ function removeItem(e) {
 
 let items = JSON.parse(localStorage.getItem('cart'));
 
-/*Envoie le formulaire lorsque l'on appuie sur le bouton "commander"
+//Envoie le formulaire lorsque l'on appuie sur le bouton "commander"
 function getForm() {
     const form = document.querySelector('form');
     if (localStorage.getItem('cart') != null) {
@@ -233,7 +233,7 @@ function getForm() {
             }
             formValidation();
 
-            / Tableau du localStorage pour l'envoyer au serveur
+            //Tableau du localStorage pour l'envoyer au serveur
             let items = [];
             for (let i = 0; i < items.length; i++) {
                 items.push(items[i].id);
@@ -271,4 +271,4 @@ function getForm() {
         });
     }
 }
-getForm();*/
+getForm();

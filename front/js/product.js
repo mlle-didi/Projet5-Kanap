@@ -109,4 +109,4 @@ cartButton.addEventListener('click', function(event){
     event.preventDefault();
   }
   addToCart(id, color, quantity);
-});
+}); 
