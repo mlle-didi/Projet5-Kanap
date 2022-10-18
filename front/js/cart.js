@@ -153,7 +153,7 @@ function getForm() {
                 return true;
                 } else {
                 let firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-                firstNameErrorMsg.innerHTML = "Ne peut contenir de chiffres ou caractères spéciaux";
+                firstNameErrorMsg.innerHTML = "Veuillez saisir un prénom valide <br> Ne peut contenir de chiffres ou caractères spéciaux";
                 }
             }
             formFirstName();
@@ -167,8 +167,7 @@ function getForm() {
                 return true;
                 } else {
                 let lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-                lastNameErrorMsg.innerHTML =
-                    "Ne peut contenir de chiffres ou caractères spéciaux";
+                lastNameErrorMsg.innerHTML = "Veuillez saisir un nom valide <br> Ne peut contenir de chiffres ou caractères spéciaux";
                 }
             }
             formLastName();
@@ -182,7 +181,7 @@ function getForm() {
                 return true;
                 } else {
                 let addressErrorMsg = document.getElementById("addressErrorMsg");
-                addressErrorMsg.innerHTML = "Veuillez saisir une adresse valide <br> Exemple: 10 rue de Paris";
+                addressErrorMsg.innerHTML = "Veuillez saisir une adresse valide <br> Ne peut contenir de caractères spéciaux";
                 }
             }
             formAddress();
@@ -196,7 +195,7 @@ function getForm() {
                 return true;
                 } else {
                 let cityErrorMsg = document.getElementById("cityErrorMsg");
-                cityErrorMsg.innerHTML = "Veuillez saisir une nom de ville valide <br> Ne doit pas contenir de chiffre";
+                cityErrorMsg.innerHTML = "Veuillez saisir un nom de ville valide <br> Ne peut contenir de chiffres ou caractères spéciaux";
                 }
             }
             formCity();
