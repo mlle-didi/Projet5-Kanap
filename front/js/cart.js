@@ -233,34 +233,43 @@ function getForm() {
             }
             formValidation();
 
-            // Tableau du localStorage pour l'envoyer au serveur
-            let items = [];
-            for (let i = 0; i < items.length; i++) {
-                items.push(items[i].id);
+            //Création d'un nouveau tableau ID
+            let itemsId = [];
+            console.log(localStorage.getItem('cart'));
+            const data = JSON.parse(localStorage.getItem('cart'));
+            //On parcourt le tableau du localStorage
+            for(let i = 0 ; i < data.length ; i ++) {
+                //Pour récupérer les ID des articles commandés
+                const item = data[i];
+                //Puis on les envoie dans le nouveau tableau
+                itemsId.push(item[0]);
             }
-            console.log(items);
-            
+
             if (formValidation() === true) {
                 // Création d'un objet "order" avec les informations de "contact" et "produits"
                 const order = {
-                    contact,
-                    items,
+                    contact : contact,
+                    products : itemsId,
                 };
+                console.log("message: "+JSON.stringify(order));
 
                 //Requête qui retourne l'objet contact, le tableau produits et orderId
                 fetch("http://localhost:3000/api/products/order", {
-                    method: "POST",headers: {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
                         "Content-Type": "application/json",
                     },
+                    //contact et products sont attendus sinon erreur 400
                     body: JSON.stringify(order),
                 })
                 .then((res) => res.json())
                 // Pour vérifier l'état de res.ok dans le réseau
                 .then((data) => {
                     console.log(data);
-                    localStorage.clear(); //Suppresion des clés stockées
+                    localStorage.clear(); //Suppression des clés stockées
                     localStorage.setItem("orderId", data.orderId); //Ajout du duo clé-valeur dans le localStorage
-                    document.location.href = "confirmation.html";
+                    document.location.href = "./confirmation.html?id=" + data.orderId;
                 })
                 .catch(() => {
                     alert ("Une erreur est survenue, merci de revenir plus tard.");

@@ -53,19 +53,29 @@ function getCart() {
   return items;
 }
 
+//Ajout d'un paragraphe qui fait office de notification de confirmation
+let buttonAddToCart = document.getElementsByClassName('item__content__addButton');
+let newP = document.createElement('p');
+newP.textContent = '';
+buttonAddToCart[0].appendChild(newP);
+
+//Modification du css pour mettre la notification sous le boutton addToCart
+buttonAddToCart[0].style.display = 'block';
+buttonAddToCart[0].style.textAlign = 'center';
+
 //La fonction addTocart ajoute le canapé sélectionné au localStorage, selon qu'il y est ou non
 function addToCart(id, color, quantity) {
-  let addConfirm = () => {window.confirm("Votre produit a été ajouté au panier. Pour le consulter, cliquez sur OK.");
-  window.location.href = "cart.html";}
+  let min = document.getElementById('quantity').min;
+  let max = document.getElementById('quantity').max;
   //Si la quantité est inférieur ou égale à 0 ou qu'une couleur n'est pas sélectionné alors il n'y a aucun ajout 
-  if (quantity <= 0 || color == '') {
+  if (quantity < min  || quantity > max ||color == '') {
     return;
   }
   let items = getCart();
   //Si il n'y a aucun article dans le localStorage, on l'ajoute et on confirme son ajout
   if (items.length == 0) {
     items = [[id, color, quantity]];
-    addConfirm();
+    newP.textContent = 'Votre produit a été ajouté au panier';
     //Sinon on vérifie si il est déja présent dans le localStorage
   } else {
     let found = false;
@@ -78,14 +88,14 @@ function addToCart(id, color, quantity) {
         found = true;
         quantityArray += quantity;
         items[i][2] = quantityArray;
-        addConfirm();
+        newP.textContent = 'Votre produit a été ajouté au panier';
       }
     }
     //Si il n'existe pas, on l'ajoute et on confirme son ajout
     if (found == false) {
       let item = [id, color, quantity];
       items.push(item);
-      addConfirm();
+      newP.textContent = 'Votre produit a été ajouté au panier';
     }
   }
   //Mise à jour du localStorage
@@ -97,6 +107,8 @@ const cartButton = document.getElementById('addToCart');
 
 //A l'appui du bouton : cartButton
 cartButton.addEventListener('click', function(event){
+  let min = document.getElementById('quantity').min;
+  let max = document.getElementById('quantity').max;
   let quantity = parseInt(quantityValue());
   let color = colorValue();
   //Si la couleur n'est pas sélectionné, un message d'erreur apparaît
@@ -105,7 +117,7 @@ cartButton.addEventListener('click', function(event){
     event.preventDefault();
   }
   //Si la quantité est inférieur ou égale à 0, un message d'erreur apparaît
-  if(quantity <= 0) {
+  if(quantity < min || quantity > max) {
     alert("Veuillez entrer une quantité valide s'il vous plaît");
     event.preventDefault();
   }
