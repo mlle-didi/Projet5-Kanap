@@ -100,6 +100,8 @@ function addToCart(id, color, quantity) {
   }
   //Mise à jour du localStorage
   localStorage.setItem('cart', JSON.stringify(items));
+  //Redirection vers la page "panier"
+  document.location.href = "./cart.html"
 }
 
 //Selection du bouton ajouter au panier
@@ -111,14 +113,10 @@ cartButton.addEventListener('click', function(event){
   let max = document.getElementById('quantity').max;
   let quantity = parseInt(quantityValue());
   let color = colorValue();
-  //Si la couleur n'est pas sélectionné, un message d'erreur apparaît
-  if(color == '') {
-    alert("Veuillez sélectionner une couleur s'il vous plaît");
-    event.preventDefault();
-  }
-  //Si la quantité est inférieur ou égale à 0, un message d'erreur apparaît
-  if(quantity < min || quantity > max) {
-    alert("Veuillez entrer une quantité valide s'il vous plaît");
+
+  //Si la couleur n'est pas sélectionné ou que la quantité n'est pas valide , un message d'erreur apparaît
+  if(color == '' || quantity < min || quantity > max){
+    alert("Veuillez sélectionner une couleur et une quantité valide s'il vous plaît");
     event.preventDefault();
   }
   addToCart(id, color, quantity);

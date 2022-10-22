@@ -88,7 +88,19 @@ function changeQuantity(e) {
             //Si son id et sa couleur correspond
             if (id === items[i][0] && color === items[i][1]) {
                 //On modifie sa quantité avec la quantité saisie
-                items[i][2] = parseInt(e.target.value);         
+                items[i][2] = parseInt(e.target.value);  
+                //Si la valeur saisie est supérieur à 101  
+                if(items[i][2] >= 101){
+                    items[i][2] = 100
+                    //On retourne la valeur 100
+                    e.target.value = 100
+                }
+                //Si la valeur saisie est inférieur à 1
+                if(items[i][2] <= 1){
+                    items[i][2] = 1
+                    //On retourne la valeur 1
+                    e.target.value = 1
+                }
             }
             //Mise à jour du localStorage
             localStorage.setItem("cart", JSON.stringify(items));
@@ -268,7 +280,7 @@ function getForm() {
                     console.log(data);
                     localStorage.clear(); //Suppression des clés stockées
                     localStorage.setItem("orderId", data.orderId); //Ajout du duo clé-valeur dans le localStorage
-                    document.location.href = "./confirmation.html?id=" + data.orderId;
+                    document.location.href = "./confirmation.html?id=" + data.orderId; //Redirection vers la page "confirmation"
                 })
                 .catch(() => {
                     alert ("Une erreur est survenue, merci de revenir plus tard.");
