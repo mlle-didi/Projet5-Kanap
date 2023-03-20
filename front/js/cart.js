@@ -16,15 +16,15 @@ function fetchIdData() {
         let items = JSON.parse(localStorage.getItem('cart'));
         //On parcourt le tableau du localStorage pour trouver le produit demandé
         for (let i = 0; i < items.length; i++) {
-            let productID = items[i][0];
+            let id = items[i][0];
             let color = items[i][1];
             let quantity = items[i][2];
             //Requête pour récupérer les données du canapé
-            fetch(`http://localhost:3000/api/products/${productID}`)
+            fetch(`http://localhost:3000/api/products/${id}`)
             .then((res) => res.json())
             .then((data) => {
                 //Intégration des données récupérées pour afficher l'article dans le panier
-                cartSection.innerHTML += `<article class='cart__item' data-id='${productID}' data-color='${color}'>
+                cartSection.innerHTML += `<article class='cart__item' data-id='${id}' data-color='${color}'>
                     <div class='cart__item__img'>
                     <img src='${data.imageUrl}' alt='${data.altTxt}'>
                     </div>
@@ -82,11 +82,11 @@ function changeQuantity(e) {
     //Si le panier n'est pas vide
     if (localStorage.getItem('cart') != null) {
         let items = JSON.parse(localStorage.getItem('cart'));
-        let {productID, color} = e.target.closest(".cart__item").dataset;
+        let {id, color} = e.target.closest(".cart__item").dataset;
         //On parcourt le tableau du localStorage pour trouver l'article demandé
         for (let i = 0; i < items.length; i++) {
             //Si son id et sa couleur correspond
-            if (productID === items[i][0] && color === items[i][1]) {
+            if (id === items[i][0] && color === items[i][1]) {
                 //On modifie sa quantité avec la quantité saisie
                 items[i][2] = parseInt(e.target.value);         
             }
@@ -103,11 +103,11 @@ function removeItem(e) {
     //Si le panier n'est pas vide 
     if (localStorage.getItem('cart') != null) {
         let items = JSON.parse(localStorage.getItem('cart'));
-        let {productID, color} = e.target.closest(".cart__item").dataset;
+        let {id, color} = e.target.closest(".cart__item").dataset;
         //On parcourt le tableau du localStorage pour trouver l'article demandé
         for (let i = 0; i < items.length; i++) {
             //Si son id et sa couleur correspond
-            if (productID === items[i][0] && color === items[i][1]) {
+            if (id === items[i][0] && color === items[i][1]) {
                 //On le supprime
                 items.splice(i, 1);
             }  
@@ -119,9 +119,9 @@ function removeItem(e) {
             //Alors on supprime le panier du localStorage
             localStorage.removeItem('cart');
         }
+            //Mise à jour de l'affichage
+            fetchIdData();
     }
-    //Mise à jour de l'affichage
-    fetchIdData();
 }
 
 // GERER LE FORMULAIRE CLIENT //
@@ -233,10 +233,10 @@ function getForm() {
             }
             formValidation();
 
-            // Tableau du localStorage pour l'envoyer au serveur
+            //Tableau du localStorage pour l'envoyer au serveur
             let items = [];
             for (let i = 0; i < items.length; i++) {
-                items.push(items[i].productID);
+                items.push(items[i].id);
             }
             console.log(items);
             

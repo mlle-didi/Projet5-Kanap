@@ -1,12 +1,13 @@
-//Produits disponibles sur page d'accueil
-//requête API pour demander l'ensemble des produits
+//PRODUITS DISPONIBLES SUR PAGE D'ACCUEIL
+
+//Requête API pour demander l'ensemble des produits
 fetch('http://localhost:3000/api/products')
 .then(function(res) {
     if (res.ok) {
         return res.json();
     }
 }) 
-//réponse émise, produits affichés
+//Réponse émise, produits affichés
 .then(function(value) {
     console.log(value);
     let sectionItemHtml = document.getElementById('items');
