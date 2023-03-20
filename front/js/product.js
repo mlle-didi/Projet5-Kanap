@@ -113,5 +113,9 @@ cartButton.addEventListener('click', function(event){
 });
 =======
   addToCart(id, color, quantity);
+<<<<<<< HEAD
 }); 
 >>>>>>> ae588d5 (mise à jour)
+=======
+}); 
+>>>>>>> 28df6724bdc74adf870eb1fef9cdf745b9bd6ef7
